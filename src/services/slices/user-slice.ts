@@ -10,6 +10,7 @@ import {
 } from '@api';
 import { deleteCookie, setCookie } from '../../utils/cookie';
 import { TUser } from '@utils-types';
+import { USER_SLICE_NAME } from '../../utils/constants';
 
 export const registerUser = createAsyncThunk(
   'register/post',
@@ -89,7 +90,7 @@ const initialState: IUserState = {
 };
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: USER_SLICE_NAME,
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -125,8 +126,8 @@ export const userSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(getUser.pending, (state) => {
-        state.error = undefined;
         state.isAuthChecked = false;
+        state.error = undefined;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.isAuthChecked = true;
@@ -176,5 +177,3 @@ export const {
   getIsLoadingSelector,
   getUserSelector
 } = userSlice.selectors;
-
-export default userSlice.reducer;

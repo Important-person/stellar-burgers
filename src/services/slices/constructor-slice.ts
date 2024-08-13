@@ -4,6 +4,7 @@ import {
   TConstructorIngredient,
   TMoveIngredient
 } from '@utils-types';
+import { CONSTRUCTOR_SLICE_NAME } from '../../utils/constants';
 
 interface construstorSlise {
   bun: TConstructorIngredient | null;
@@ -16,7 +17,7 @@ const initialState: construstorSlise = {
 };
 
 export const constructorSlice = createSlice({
-  name: 'constructorBurger',
+  name: CONSTRUCTOR_SLICE_NAME,
   initialState,
   reducers: {
     addToBurger: {
@@ -74,5 +75,3 @@ export const {
   removeIngredient,
   moveIngredient
 } = constructorSlice.actions;
-
-export default constructorSlice.reducer;
