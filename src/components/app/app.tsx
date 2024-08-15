@@ -14,11 +14,15 @@ import styles from './app.module.css';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
 import { useDispatch, useSelector } from '../../services/store';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { fetchIngredients } from '../../services/slices/Ingredients-slice';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { getOrders, orderSelector } from '../../services/slices/order-slice';
+import {
+  getOrders,
+  isLoadingSelector,
+  orderSelector
+} from '../../services/slices/order-slice';
 import { getUser } from '../../services/slices/user-slice';
 
 const App = () => {
@@ -26,6 +30,7 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const orderNumder = useSelector(orderSelector);
+  const orderIsLoading = useSelector(isLoadingSelector);
 
   const backgroundLocation = location.state?.background;
 
@@ -33,6 +38,13 @@ const App = () => {
     dispatch(fetchIngredients());
     dispatch(getUser());
   }, [dispatch]);
+
+  const modalTitle = useMemo(() => {
+    if (orderIsLoading) {
+      return 'Детали заказа';
+    }
+    return orderNumder ? `#${orderNumder.number}` : 'Детали заказа';
+  }, [orderIsLoading, orderNumder]);
 
   return (
     <>
@@ -97,12 +109,7 @@ const App = () => {
             <Route
               path='/feed/:number'
               element={
-                <Modal
-                  title={
-                    orderNumder ? `#${orderNumder?.number}` : 'Детали заказа'
-                  }
-                  onClose={() => navigate(-1)}
-                >
+                <Modal title={modalTitle} onClose={() => navigate(-1)}>
                   <OrderInfo />
                 </Modal>
               }
@@ -122,12 +129,7 @@ const App = () => {
               path='/profile/orders/:number'
               element={
                 <ProtectedRoute>
-                  <Modal
-                    title={
-                      orderNumder ? `#${orderNumder?.number}` : 'Детали заказа'
-                    }
-                    onClose={() => navigate(-1)}
-                  >
+                  <Modal title={modalTitle} onClose={() => navigate(-1)}>
                     <OrderInfo />
                   </Modal>
                 </ProtectedRoute>

@@ -13,7 +13,7 @@ import {
   removeBurger
 } from '../../services/slices/order-slice';
 import {
-  getIsAuthCheckedSelector,
+  getIsAuthenticatedSelector,
   getUserSelector
 } from '../../services/slices/user-slice';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 export const BurgerConstructor: FC = () => {
   const constructorItems = useSelector(burgerSelector);
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(getIsAuthCheckedSelector);
+  const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const user = useSelector(getUserSelector);
   const navigate = useNavigate();
 
@@ -30,11 +30,11 @@ export const BurgerConstructor: FC = () => {
   const orderModalData = useSelector(orderSelector);
 
   const onOrderClick = () => {
-    if (!constructorItems.bun || orderRequest) return;
-
     if (!user && !isAuthenticated) {
       return navigate('/login');
     }
+
+    if (!constructorItems.bun || orderRequest) return;
 
     const ingredients = constructorItems.ingredients.map((item) => item._id);
     dispatch(

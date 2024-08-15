@@ -5,7 +5,7 @@ import { INGREDIENTS_SLICE_NAME } from '../../utils/constants';
 
 export const fetchIngredients = createAsyncThunk(
   'ingredients/getAll',
-  async () => getIngredientsApi()
+  getIngredientsApi
 );
 
 interface IIngredirntsSlice {

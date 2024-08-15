@@ -78,15 +78,13 @@ interface IUserState {
   isAuthenticated: boolean;
   user: TUser | null;
   error: string | undefined;
-  isLoading: boolean;
 }
 
 const initialState: IUserState = {
   isAuthChecked: false,
   isAuthenticated: false,
   user: null,
-  error: undefined,
-  isLoading: false
+  error: undefined
 };
 
 export const userSlice = createSlice({
@@ -165,7 +163,7 @@ export const userSlice = createSlice({
   },
   selectors: {
     getUserSelector: (state) => state.user,
-    getIsLoadingSelector: (state) => state.isLoading,
+    getIsAuthenticatedSelector: (state) => state.isAuthenticated,
     getErrorSelector: (state) => state.error,
     getIsAuthCheckedSelector: (state) => state.isAuthChecked
   }
@@ -174,6 +172,6 @@ export const userSlice = createSlice({
 export const {
   getErrorSelector,
   getIsAuthCheckedSelector,
-  getIsLoadingSelector,
+  getIsAuthenticatedSelector,
   getUserSelector
 } = userSlice.selectors;
