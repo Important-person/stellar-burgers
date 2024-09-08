@@ -1,16 +1,19 @@
 describe('add ingredients', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', {fixture: 'ingredients.json'});
-    cy.visit('http://localhost:4000/');
+    cy.visit('/');
   });
 
   it('add bun', () => {
+    cy.get('[data-cy=contructor_bun_1]').contains('Краторная булка N-200i').should('not.exist');
+    cy.get('[data-cy=contructor_bun_2]').contains('Краторная булка N-200i').should('not.exist');
     cy.get('[data-cy=bun]').contains('Добавить').click();
     cy.get('[data-cy=contructor_bun_1]').contains('Краторная булка N-200i').should('exist');
     cy.get('[data-cy=contructor_bun_2]').contains('Краторная булка N-200i').should('exist');
   });
 
   it('add stuffing', () => {
+    cy.get('[data-cy=contructor_stuffing]').contains('Биокотлета из марсианской Магнолии').should('not.exist');
     cy.get('[data-cy=stuffing]').contains('Добавить').click();
     cy.get('[data-cy=souse]').contains('Добавить').click();
     cy.get('[data-cy=contructor_stuffing]').contains('Биокотлета из марсианской Магнолии').should('exist');
@@ -25,6 +28,7 @@ describe('test modal', () => {
   });
 
   it('open modal test', () => {
+    cy.contains('Детали ингредиента').should('not.exist');
     cy.contains('Краторная булка N-200i').click();
     cy.contains('Детали ингредиента').should('exist');
     cy.get('#modals').contains('Краторная булка N-200i').should('exist');
