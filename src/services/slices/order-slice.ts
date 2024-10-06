@@ -27,7 +27,7 @@ export const getOrderByNumber = createAsyncThunk(
   }
 );
 
-interface IOrderSlice {
+export interface IOrderSlice {
   orders: TOrder[];
   order: TOrder | null;
   isLoading: boolean;

@@ -14,14 +14,15 @@ import styles from './app.module.css';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
 import { useDispatch, useSelector } from '../../services/store';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { fetchIngredients } from '../../services/slices/Ingredients-slice';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import {
   getOrders,
   isLoadingSelector,
-  orderSelector
+  orderSelector,
+  removeBurger
 } from '../../services/slices/order-slice';
 import { getUser } from '../../services/slices/user-slice';
 
@@ -37,7 +38,14 @@ const App = () => {
   useEffect(() => {
     dispatch(fetchIngredients());
     dispatch(getUser());
-  }, [dispatch]);
+
+    if (
+      !backgroundLocation &&
+      location.pathname !== `/feed/${orderNumder?.number}`
+    ) {
+      dispatch(removeBurger());
+    }
+  }, [dispatch, backgroundLocation, location]);
 
   const modalTitle = useMemo(() => {
     if (orderIsLoading) {
@@ -101,6 +109,9 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route path='/feed/:number' element={<OrderInfo />} />
+          <Route path='/ingredients/:id' element={<IngredientDetails />} />
+          <Route path='/profile/orders/:number' element={<OrderInfo />} />
           <Route path='*' element={<NotFound404 />} />
         </Routes>
 

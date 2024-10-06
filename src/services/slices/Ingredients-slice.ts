@@ -8,7 +8,7 @@ export const fetchIngredients = createAsyncThunk(
   getIngredientsApi
 );
 
-interface IIngredirntsSlice {
+export interface IIngredirntsSlice {
   ingredients: TIngredient[];
   error: string | undefined;
   isLoading: boolean;

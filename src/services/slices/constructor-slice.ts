@@ -6,12 +6,12 @@ import {
 } from '@utils-types';
 import { CONSTRUCTOR_SLICE_NAME } from '../../utils/constants';
 
-interface construstorSlise {
+export interface IconstrustorSlise {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
 }
 
-const initialState: construstorSlise = {
+const initialState: IconstrustorSlise = {
   bun: null,
   ingredients: []
 };

@@ -14,7 +14,7 @@ export const fetchFeed = createAsyncThunk(
   }
 );
 
-interface IFeedSlice {
+export interface IFeedSlice {
   feed: TOrdersData;
   isLoading: boolean;
   error: string | undefined;

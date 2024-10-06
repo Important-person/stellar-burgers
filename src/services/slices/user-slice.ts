@@ -73,7 +73,7 @@ export const logout = createAsyncThunk(
   }
 );
 
-interface IUserState {
+export interface IUserState {
   isAuthChecked: boolean;
   isAuthenticated: boolean;
   user: TUser | null;
